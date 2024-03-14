@@ -1,0 +1,182 @@
+<!-- (hidden.bs.modal)="cancelForm()" -->
+<div class="modal right fade"  #rightModal id="rightModal" tabindex="-1" role="dialog" aria-labelledby="rightModalLabel"
+    (hidden.bs.modal)="cancelForm()" appClickOutside (clickOutside)="cancelForm()">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title text-left" id="myModalLabel2">Update Group
+                </h4>
+                <button type="button" (click)="cancelForm()" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body" #rightModalDialog id="rightModalDialog" >
+                <div class="custom" id="custom" #custom>
+                    <!-- (ngSubmit)="isEditMode ? updateGroup() : onSubmit()" -->
+                    <form [formGroup]="groupForm" class="formElements ">
+                        <!-- <div class="zm-popup-groupid" >
+                        <label>Group ID <span class="text-danger">*</span></label>                        
+                        <input type="text" name="groupId" id="groupId" [ngClass]="{'border-danger': submitted && groupForm.get('groupId')?.errors }"  formControlName="groupId">                        
+                    </div> -->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Group Name <span class="text-danger">*</span></label>
+                                <!-- [(ngModel)]="formData.groupName" -->
+                                <input type="text" class="form-control"
+                                    [ngClass]="{'border-danger': submitted && groupForm.get('groupName')?.errors}"
+                                    formControlName="groupName" id="groupName" placeholder="">
+                                <!-- <div *ngIf="groupForm.get('groupName')?.invalid ">
+                                <div *ngIf=" submitted &&  groupForm.get('groupName')?.errors" class="text-danger">Group Name is required</div>
+                            </div> -->
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Group Status <span class="text-danger">*</span></label>
+
+                                <select class="form-control" formControlName="groupStatus" id="groupStatus"
+                                    [ngClass]="{'border-danger': submitted && groupForm.get('groupStatus')?.errors}">
+                                    <option value="" disabled selected>-- Select--</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                    <option value="Pending">Pending</option>
+
+                                </select>
+
+                            </div>
+                            <!-- <div class="form-group col-md-6" ngbDropdown>
+                            <label>Group Status <span class="text-danger">*</span></label>
+                            <div ngbDropdownToggle class="d-flex align-items-center">
+                                <input class="form-control"
+                                    [ngClass]="{'border-danger': submitted && groupForm.get('groupStatus')?.errors}"
+                                    formControlName="groupStatus" id="groupStatus" placeholder="Select status">
+                            </div>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem value="Active"
+                                    (click)="groupForm.get('groupStatus')?.setValue('Active')">Active</button>
+                                <button ngbDropdownItem value="Inactive"
+                                    (click)="groupForm.get('groupStatus')?.setValue('Inactive')">Inactive</button>
+                                <button ngbDropdownItem value="Pending"
+                                    (click)="groupForm.get('groupStatus')?.setValue('Pending')">Pending</button>
+                            </div>
+                        </div> -->
+
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>TTY Number </label>
+
+                                <input type="number" class="form-control"
+                                    [ngClass]="{'border-danger':submitted && groupForm.get('ttyNumber')?.invalid }"
+                                    formControlName="ttyNumber" id="ttyNumber" placeholder="">
+
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label>Tax ID </label>
+                                <!-- [(ngModel)]="formData.taxId" -->
+                                <input type="number" class="form-control"
+                                    [ngClass]="{'border-danger':submitted && groupForm.get('taxId')?.invalid }"
+                                    formControlName="taxId" id="taxId" placeholder="">
+                                <!-- <div *ngIf="groupForm.get('taxId')?.invalid && (groupForm.get('taxId')?.dirty || groupForm.get('taxId')?.touched)"> -->
+                                <div *ngIf="  submitted &&  groupForm.get('taxId')?.errors" class="text-danger">Tax id
+                                    should not start with 0, should be 10 digits</div>
+                                <!-- </div>  -->
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Legal Name <span class="text-danger">*</span></label>
+                                <!-- [(ngModel)]="formData.legalName" -->
+                                <input type="text" class="form-control"
+                                    [ngClass]="{'border-danger': submitted && groupForm.get('legalName')?.invalid }"
+                                    formControlName="legalName" id="legalName" placeholder="">
+                                <!-- <div *ngIf="groupForm.get('legalName')?.invalid && (groupForm.get('legalName')?.dirty || groupForm.get('legalName')?.touched)">
+                                <div *ngIf=" submitted &&  groupForm.get('legalName')?.errors" class="text-danger">Legal Name is required</div>
+                            </div> -->
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>DBA Name </label>
+                                <!-- [(ngModel)]="formData.dbaName" -->
+                                <input type="text" class="form-control"
+                                    [ngClass]="{'border-danger': submitted && groupForm.get('dbaName')?.invalid }"
+                                    formControlName="dbaName" id="dbaName" placeholder="">
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Effective Date <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input
+                                        [ngClass]="{'border-danger': submitted &&  groupForm.get('effectivedate')?.invalid}"
+                                        class="form-control" placeholder="yyyy-mm-dd" name="dp1" ngbDatepicker
+                                        #dp1="ngbDatepicker" formControlName="effectivedate" id="effectivedate">
+                                    <div class="input-group-append">
+                                        <button (click)="dp1.toggle()" class="btn btn-outline-secondary calendar"
+                                            type="button"><i class="fas fa-calendar-alt"></i> </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>End Effective Date <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input class="form-control"
+                                        [ngClass]="{'border-danger': submitted &&  groupForm.get('endeffectivedate')?.errors }"
+                                        placeholder="yyyy-mm-dd" name="dp2" #dp2="ngbDatepicker" ngbDatepicker
+                                        formControlName="endeffectivedate" id="endeffectivedate">
+                                    <div class="input-group-append">
+                                        <button (click)="dp2.toggle()" class="btn btn-outline-secondary calendar"
+                                            type="button"><i class="fas fa-calendar-alt"></i> </button>
+                                    </div>
+                                </div>
+                                <div *ngIf="submitted && groupForm.errors?.['dateOrder']  && (groupForm.get('endeffectivedate')?.dirty || groupForm.get('endeffectivedate')?.touched)"
+                                    class="text-danger">
+                                    Effective Date must be before End-Effective Date
+                                </div>
+
+
+                                <!-- <input type="text" class="form-control"
+                                [ngClass]="{'border-danger': submitted && groupForm.get('groupName')?.errors}"
+                                formControlName="groupName" id="groupName" placeholder=""> -->
+
+
+                                <!-- <div *ngIf="groupForm.controls['effectivedate'].errors?.['dateOrder'] || groupForm.controls['endeffectivedate'].errors?.['dateOrder']"
+                                class="text-danger">
+                                Effective Date must be before End Effective Date
+                            </div>  -->
+                                <!-- <div *ngIf="submitted &&  groupForm.get('effectivedate')?.errors" class="text-danger"> Effective Date must be before End Effective Date</div> -->
+                            </div>
+                        </div>
+                        <div class="zm-popup-datarow">
+                            <div class="zm-popup-datarow-id">
+                                <label>Medicare ID</label>
+                                <input type="text" class="form-control" id="medicareId"
+                                    [ngClass]="{'border-danger':submitted && groupForm.get('medicareId')?.invalid }"
+                                    formControlName="medicareId" placeholder="">
+                                <div
+                                    *ngIf="groupForm.get('medicareId')?.invalid && (groupForm.get('medicareId')?.dirty || groupForm.get('medicareId')?.touched)">
+                                    <div *ngIf="  submitted &&  groupForm.get('medicareId')?.errors"
+                                        class="text-danger">
+                                        MedicareId is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <!-- data-dismiss="modal" -->
+                            <button type="submit" (click)=" updateGroup() "
+                                class="btn btn-secondary" [attr.data-dismiss]="!submitted ? 'modal' : null"><i
+                                    class="mdi mdi-plus"></i> Update</button>
+                            <button type="button" (click)="cancelForm()" class="btn btn-primary"
+                                data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div>

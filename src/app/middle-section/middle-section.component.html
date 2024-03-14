@@ -1,0 +1,145 @@
+<section class="zm-middle-section" style="min-height: 500px;">
+    <div class="container-fluid">
+        <h1 class="page-heading">Group Management</h1>
+        <div class="zm-group-management">
+            <div class="zm-tab-top">
+                <ul class="nav nav-tabs tab-margin" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            aria-controls="home" aria-selected="true">Group</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="demo-tab" data-toggle="tab" href="#demo" role="tab" aria-controls="demo"
+                            aria-selected="true">Group 1</a>
+                    </li>
+                </ul>
+                <a class="btn btn-default" (click)="open()">Add Group</a>
+                <!-- <a class="btn btn-default" data-toggle="modal" data-target="#rightModal">Add Group</a> -->
+                <!-- <a routerLink="/groups/add"  data-toggle="modal" data-target="#rightModal" class="btn btn-default">Add Group</a> -->
+
+            </div>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="zm-tab-inner">
+                        <div class="zm-tab-search">
+                            <input type="text" name="" (input)="onSearch($event)">
+                            <button><i class="mdi mdi-magnify"></i></button>
+                        </div>
+
+                        <div class="zm-table">
+                            <div class="zm-table-header">
+                                <div class="zm-table-expland"></div>
+                                <!-- <div class="zm-table-expland">ID</div> -->
+                                <div class="zm-table-name">Group Name</div>
+                                <div class="zm-table-status">Tax ID</div>
+                                <div class="zm-table-coporate">Legal Name</div>
+                                <div class="zm-table-coporate">DBA Name</div>
+                                <!-- <div class="zm-table-name">Effective Date</div>
+                                <div class="zm-table-name">End Effective Date</div>                              -->
+                                <!-- <div class="zm-table-name">Medicare ID</div> -->
+                                <!-- <div class="zm-table-status">Active</div>
+                                <div class="zm-table-corporate">Corporate</div> -->
+                                <div class="zm-table-action">Actions</div>
+                            </div>
+                            <div *ngIf="groups.length === 0; else dataAvailable">
+                                <div class="zm-table-row">
+                                    <div class="zm-table-name">
+                                        <p>No data available</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-template #dataAvailable>
+                                <div *ngFor="let group of filteredGroups">
+                                    <div class="zm-table-row">
+                                        <div class="zm-table-expland"><a data-toggle="collapse" href="#childtable1"
+                                                role="button" aria-expanded="false" aria-controls="childtable1"
+                                                class="collapsed"><i class="mdi mdi-plus"></i></a></div>
+                                        <!-- <div class="zm-table-expland">{{ group.groupId }}</div> -->
+                                        <div class="zm-table-name"><a href="#">{{ group.groupName }}</a></div>
+                                        <div class="zm-table-status">{{ group.taxId }}</div>
+                                        <div class="zm-table-coporate">{{ group.legalName }}</div>
+                                        <div class="zm-table-coporate">{{ group.dbaName }}</div>
+                                        <!-- <div class="zm-table-name">{{ group.effectivedate }}</div>
+                                <div class="zm-table-name">{{ group.endeffectivedate }}</div>                             -->
+                                        <!-- <div class="zm-table-name">{{ group.medicareId }}</div> -->
+                                        <!-- <div class="zm-table-status">{{ group.active }}</div>s
+                                <div class="zm-table-corporate">{{ group.corporate }}</div> -->
+                                        <div class="zm-table-action">
+                                            <!-- <a  [routerLink]="['/groups/edit', group.groupName]" data-toggle="modal" data-target="#rightModal" class="btn btn-default">Edit</a> -->
+
+                                            <a href="#" data-toggle="modal" data-target="#rightModal"
+                                                (click)="openEditMode(group)">Edit</a>
+                                            <a href="#" class="margin-left" (click)="deleteGroup(group)">Delete</a>
+                                            <!-- <a href="#">+ Add a Location</a> -->
+                                        </div>
+                                    </div>
+                                    <div class="zm-table-child collapse" id="childtable1">
+                                        <div class="zm-table-header">
+                                            <div class="zm-table-expland"></div>
+                                            <div class="zm-table-name">
+                                                <div class="zm-table-location-name">Location Name</div>
+                                                <div class="zm-table-address">Address</div>
+                                            </div>
+                                            <div class="zm-table-status"></div>
+                                            <div class="zm-table-coporate"></div>
+                                            <div class="zm-table-action"></div>
+                                        </div>
+                                        <div class="zm-table-row">
+                                            <div class="zm-table-expland"></div>
+                                            <div class="zm-table-name">
+                                                <div class="zm-table-location-name"><a href="#">Happy First Family</a>
+                                                </div>
+                                                <div class="zm-table-address">300 Highland Ave Hanover, PA</div>
+                                            </div>
+                                            <div class="zm-table-status">Yes</div>
+                                            <div class="zm-table-coporate">Yes</div>
+                                            <div class="zm-table-action"></div>
+                                        </div>
+                                        <div class="zm-table-row">
+                                            <div class="zm-table-expland"></div>
+                                            <div class="zm-table-name">
+                                                <div class="zm-table-location-name"><a href="#">UPMC - Harrisburg</a>
+                                                </div>
+                                                <div class="zm-table-address">111 S Front St. Harrisburg, PA</div>
+                                            </div>
+                                            <div class="zm-table-status">Yes</div>
+                                            <div class="zm-table-coporate">No</div>
+                                            <div class="zm-table-action"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </ng-template>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="demo" role="tabpanel" aria-labelledby="demo-tab">Demo</div>
+            </div>
+        </div>
+
+        <!-- <div class="zm-pagination">
+            <ul>
+                <li class="prev"><a href="#">Prev</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li class="active"><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li class="next"><a href="#">Next</a></li>
+            </ul>
+        </div> -->
+    </div>
+</section>
+
+
+
+<!-- Modal -->
+<ng-container *ngIf="isEditMode; else addGroupModal">
+    <app-modal [isEditMode]="isEditMode" [groupData]="groupData" (formSubmitted)="onFormSubmitted()"></app-modal>
+</ng-container>
+
+<ng-template #addGroupModal>
+    <app-modal [isEditMode]="isEditMode" (formSubmitted)="onFormSubmitted()"></app-modal>
+</ng-template>
+<!-- modal -->
