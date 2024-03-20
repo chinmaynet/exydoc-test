@@ -9,16 +9,39 @@ import { ModalComponent } from './modal/modal.component';
 import { FooterComponent } from './footer/footer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
 
 import { NgbDateParserFormatter, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+// import { MatFormFieldModule } from '@angular/material/form-field';
 import { TestsComponent } from './tests/tests.component';
 import { AddgroupComponent } from './addgroup/addgroup.component';
 import { EditgroupComponent } from './editgroup/editgroup.component';
+import { OnlyNumericDirective } from './only-numeric.directive';
+// import { NgxTagsInputModule } from 'ngx-tags-input';
+import { TagsChangedEvent } from 'ngx-tags-input';
+import { NgxTagsInputModule } from 'ngx-tags-input';
 
-
+// import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
+// import {MatIconModule} from '@angular/material/icon';
+// import { MatFormField } from '@angular/material/form-field';
+// import { MatLabel } from '@angular/material/form-field';
+// import { MatChipGrid } from '@angular/material/chips';
+// import { MatChipRow } from '@angular/material/chips';
+// import { MatIcon } from '@angular/material/icon';
+@NgModule({
+  imports: [
+    // MatFormFieldModule,
+    
+    FormsModule,
+    // MatChipsModule,
+    // MatIconModule,
+  ],
+  // Other module properties...
+})
+export class YourAppModule { }
 
 
 // import { DateDirective } from './date.directive';
@@ -33,14 +56,20 @@ import { EditgroupComponent } from './editgroup/editgroup.component';
     FooterComponent,
     TestsComponent,
     AddgroupComponent,
-    EditgroupComponent,    
+    EditgroupComponent,
+    OnlyNumericDirective,
     // DateDirective,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, ReactiveFormsModule,
     NgbModule,
+    // ,NgxTagsComponent,
+    //  NgxTagsInputModule
+    NgxTagsInputModule
+    // ,MatFormField,MatLabel,MatChipGrid,MatChipRow,MatIcon    
   ],
   providers: [
     // {provide: NgbDateParserFormatter, useClass: MomentDateFormatter}

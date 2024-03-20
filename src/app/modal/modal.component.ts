@@ -1,14 +1,29 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, NgZone, Output, EventEmitter, Input, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { LocalStorageService } from '../local-storage.service';
 import { FormBuilder, FormGroup, FormControl, Validators, ValidationErrors, ValidatorFn, AbstractControl } from '@angular/forms';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnInit {
-  // @ViewChild ('rightModal', {static :false}) rightModal?:ElementRef;
-  @ViewChild('rightModal') rightModal!: ElementRef;
+  // public users: any;
+  // @Input() name:any;
+  // constructor( public activeModal: NgbActiveModal, private ngZone: NgZone) { }
+
+  // ngOnInit() {
+  //   // this.myApiClient.get<any>().subscribe(
+  //   //   (response) => {
+  //   //     console.log(NgZone.isInAngularZone());
+  //   //     this.users = response.data;
+  //   //     console.log(this.users);
+  //   //     }
+  //   // )
+  // }
+
+  // @ViewChild('rightModal', { static: false }) rightModal?: ElementRef;
+  // @ViewChild('rightModal') rightModal!: ElementRef;
   @ViewChild('rightModalDialog', { static: false }) rightModalDialog?: ElementRef;
   @Output() clickOutside = new EventEmitter<void>();
   submitted: boolean = false;
@@ -17,7 +32,7 @@ export class ModalComponent implements OnInit {
   @Input() isEditMode!: boolean;
   @Input() groupData: any;
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
-  
+
   constructor(private localStorageService: LocalStorageService, private fb: FormBuilder) {
 
     this.groupForm = this.fb.group({
@@ -28,7 +43,7 @@ export class ModalComponent implements OnInit {
       // taxId: ['', [Validators.pattern(/^(?!0)[0-9]{10}$/)]],
       // taxId: ['', [Validators.pattern(/^[1-9][0-9]{9}$/)]],
       taxId: ['', [Validators.pattern(/^((?!(0))[0-9]{10})$/)]],
-      
+
 
       legalName: ['', Validators.required],
       dbaName: [''],
@@ -41,7 +56,7 @@ export class ModalComponent implements OnInit {
     }
       , { validator: this.dateOrderValidator }
     );
-  } 
+  }
 
   // dateOrderValidator(group: FormGroup): ValidationErrors | null {
   //   const effectiveDate = group.get('effectivedate')?.value;
@@ -52,21 +67,21 @@ export class ModalComponent implements OnInit {
   //   const endEffectiveDateDay = endEffectiveDate?.day;
   //   const endEffectiveDateMonth = endEffectiveDate?.month;
   //   const endEffectiveDateYear = endEffectiveDate?.year;
-   
+
   //   if (effectiveDateYear < endEffectiveDateYear) {
   //     return null; 
   //   } else if (effectiveDateYear > endEffectiveDateYear) {
   //     return { dateOrder: true }; 
   //   }
 
-    
+
   //   if (effectiveDateMonth < endEffectiveDateMonth) {
   //     return null; 
   //   } else if (effectiveDateMonth > endEffectiveDateMonth) {
   //     return { dateOrder: true }; 
   //   }
 
-    
+
   //   if (effectiveDateDay < endEffectiveDateDay) {
   //     return null; 
   //   } else if (effectiveDateDay > endEffectiveDateDay) {
@@ -77,28 +92,28 @@ export class ModalComponent implements OnInit {
   dateOrderValidator(group: FormGroup): ValidationErrors | null {
     const effectiveDate = group.get('effectivedate')?.value;
     const endEffectiveDate = group.get('endeffectivedate')?.value;
-  
+
     // Check if effectiveDate and endEffectiveDate are valid objects
     if (effectiveDate && endEffectiveDate) {
       debugger;
       const effectiveTime = new Date(effectiveDate.year, effectiveDate.month - 1, effectiveDate.day).getTime();
       const endEffectiveTime = new Date(endEffectiveDate.year, endEffectiveDate.month - 1, endEffectiveDate.day).getTime();
-  
+
       if (!isNaN(effectiveTime) && !isNaN(endEffectiveTime)) {
         if (effectiveTime > endEffectiveTime) {
-          return { dateOrder: true }; 
+          return { dateOrder: true };
         }
       } else {
         // Handle invalid date format
         return { invalidDate: true };
       }
     }
-    
-    return null; 
+
+    return null;
   }
-  
-  
-  
+
+
+
 
   ngOnInit(): void {
     // this.isEditMode=true;
@@ -107,8 +122,8 @@ export class ModalComponent implements OnInit {
       // this.formData = { ...this.groupData }; 
     }
 
-   
-    
+
+
   }
   // @HostListener('document:click', ['$event'])
   // clickOutside(event: MouseEvent) {
@@ -131,7 +146,7 @@ export class ModalComponent implements OnInit {
   //     this.cancelForm();
   //   }
   // }
-  
+
 
   onSubmit() {
     // if (!this.groupForm.valid) {
@@ -147,18 +162,18 @@ export class ModalComponent implements OnInit {
     //   this.formSubmitted.emit();
     //   this.groupForm.reset();
     // }   
-    
-    this.submitted = false;   
-     if (this.groupForm.errors || ( this.groupForm.get('groupName')?.errors || this.groupForm.get('groupStatus')?.errors  || this.groupForm.get('taxId')?.errors || this.groupForm.get('legalName')?.errors || this.groupForm.get('effectivedate')?.errors || this.groupForm.get('endeffectivedate')?.errors)){               
-       this.submitted = true;   
-     } 
+
+    this.submitted = false;
+    if (this.groupForm.errors || (this.groupForm.get('groupName')?.errors || this.groupForm.get('groupStatus')?.errors || this.groupForm.get('taxId')?.errors || this.groupForm.get('legalName')?.errors || this.groupForm.get('effectivedate')?.errors || this.groupForm.get('endeffectivedate')?.errors)) {
+      this.submitted = true;
+    }
     else if (this.groupForm.valid) {
       let groups = this.localStorageService.getData('groups') || [];
       groups.push(this.groupForm.value);
       this.localStorageService.saveData('groups', groups);
       this.formSubmitted.emit();
       this.groupForm.reset();
-    }   
+    }
   }
 
   updateGroup() {
@@ -179,7 +194,7 @@ export class ModalComponent implements OnInit {
 
       if (index !== -1) {
         // groups[index] = this.groupForm.value;
-         groups[index] = updatedGroup;
+        groups[index] = updatedGroup;
         this.localStorageService.saveData('groups', groups);
         this.formSubmitted.emit();
       }
@@ -188,17 +203,19 @@ export class ModalComponent implements OnInit {
 
   }
   cancelForm() {
-    
 
-    this.submitted = false;    
+
+    this.submitted = false;
     this.isEditMode = false;
     this.groupData = {};
     // this.formData={};
     this.formSubmitted.emit();
-   
+
     this.groupForm.reset();
-      document.querySelector('.modal-backdrop')?.classList.remove('show');
+    document.querySelector('.modal-backdrop')?.classList.remove('show');
     // this.ngOnInit();
   }
- 
-}
+
+
+
+} 

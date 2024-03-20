@@ -1,6 +1,6 @@
 <!-- (hidden.bs.modal)="cancelForm()" -->
-<div class="modal right fade"  #rightModal id="rightModal" tabindex="-1" role="dialog" aria-labelledby="rightModalLabel"
-    (hidden.bs.modal)="cancelForm()" appClickOutside (clickOutside)="cancelForm()">
+<!-- <div class="modal right fade"  #rightModal id="rightModal" tabindex="-1" role="dialog" aria-labelledby="rightModalLabel"
+    (hidden.bs.modal)="cancelForm()" appClickOutside (clickOutside)="cancelForm()"> -->
 
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -8,7 +8,7 @@
             <div class="modal-header">
                 <h4 class="modal-title text-left" id="myModalLabel2">Update Group
                 </h4>
-                <button type="button" (click)="cancelForm()" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" (click)="activeModal.dismiss('Cross click')" (click)="cancelForm()" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
 
@@ -66,16 +66,21 @@
                             <div class="form-group col-md-6">
                                 <label>TTY Number </label>
 
-                                <input type="number" class="form-control"
+                                <!-- <input type="number" class="form-control"
                                     [ngClass]="{'border-danger':submitted && groupForm.get('ttyNumber')?.invalid }"
-                                    formControlName="ttyNumber" id="ttyNumber" placeholder="">
-
+                                    formControlName="ttyNumber" id="ttyNumber" placeholder=""> -->
+                                    <ngx-tags-input   formControlName="ttyNumber" [placeholder]="placeholder"
+                                    (onTagsChanged)="duplicateTags($event)" 
+                                    (keydown.enter)="$event.preventDefault()"></ngx-tags-input>
+                                    <div *ngIf="submitted && groupForm.hasError('duplicateTtyNumber') || (submitted && duplicateRemoved)" class="text-danger">TTY numbers should be unique</div>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label>Tax ID </label>
                                 <!-- [(ngModel)]="formData.taxId" -->
-                                <input type="number" class="form-control"
+                                <!-- type="number" -->
+                                <input 
+                                 class="form-control"
                                     [ngClass]="{'border-danger':submitted && groupForm.get('taxId')?.invalid }"
                                     formControlName="taxId" id="taxId" placeholder="">
                                 <!-- <div *ngIf="groupForm.get('taxId')?.invalid && (groupForm.get('taxId')?.dirty || groupForm.get('taxId')?.touched)"> -->
@@ -110,7 +115,7 @@
                                 <div class="input-group">
                                     <input
                                         [ngClass]="{'border-danger': submitted &&  groupForm.get('effectivedate')?.invalid}"
-                                        class="form-control" placeholder="yyyy-mm-dd" name="dp1" ngbDatepicker
+                                        class="form-control" placeholder="yyyy-mm-dd" name="dp1" ngbDatepicker (click)="dp1.toggle()"
                                         #dp1="ngbDatepicker" formControlName="effectivedate" id="effectivedate">
                                     <div class="input-group-append">
                                         <button (click)="dp1.toggle()" class="btn btn-outline-secondary calendar"
@@ -123,7 +128,7 @@
                                 <div class="input-group">
                                     <input class="form-control"
                                         [ngClass]="{'border-danger': submitted &&  groupForm.get('endeffectivedate')?.errors }"
-                                        placeholder="yyyy-mm-dd" name="dp2" #dp2="ngbDatepicker" ngbDatepicker
+                                        placeholder="yyyy-mm-dd" name="dp2" #dp2="ngbDatepicker" ngbDatepicker (click)="dp2.toggle()"
                                         formControlName="endeffectivedate" id="endeffectivedate">
                                     <div class="input-group-append">
                                         <button (click)="dp2.toggle()" class="btn btn-outline-secondary calendar"
@@ -165,10 +170,12 @@
 
                         <div class="modal-footer">
                             <!-- data-dismiss="modal" -->
-                            <button type="submit" (click)=" updateGroup() "
-                                class="btn btn-secondary" [attr.data-dismiss]="!submitted ? 'modal' : null"><i
+                            <!-- [attr.data-dismiss]="!submitted ? 'modal' : null" -->
+                            <button type="submit"   (click)=" updateGroup() "
+                                class="btn btn-secondary" 
+                                ><i
                                     class="mdi mdi-plus"></i> Update</button>
-                            <button type="button" (click)="cancelForm()" class="btn btn-primary"
+                            <button type="button"   (click)="cancelForm()" class="btn btn-primary"
                                 data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
@@ -179,4 +186,4 @@
 
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
-</div>
+<!-- </div> -->

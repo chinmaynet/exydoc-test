@@ -1,1 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
+.tags-input__input-field {
+    border: solid 1px #d1d5e3 !important;        
+}

@@ -1,6 +1,31 @@
-<!-- (hidden.bs.modal)="cancelForm()" -->
-<div class="modal right fade"  #rightModal id="rightModal" tabindex="-1" role="dialog" aria-labelledby="rightModalLabel"
-    (hidden.bs.modal)="cancelForm()" appClickOutside (clickOutside)="cancelForm()">
+<!-- 
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Hi there!</h4>
+                <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Hello, {{ name }}!</p>
+            </div>
+            <div *ngFor="let user of users">
+                {{ user.first_name }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">
+                    Close
+                </button>
+            </div>
+        </div>
+     -->
+
+
+<div class="modal right fade" #rightModal id="rightModal" tabindex="-1" role="dialog" aria-labelledby="rightModalLabel">
+    <!-- (hidden.bs.modal)="cancelForm()" -->
+    <!-- (hidden.bs.modal)="cancelForm()" appClickOutside (clickOutside)="cancelForm()" -->
 
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -12,7 +37,7 @@
                         aria-hidden="true">&times;</span></button>
             </div>
 
-            <div class="modal-body" #rightModalDialog id="rightModalDialog" >
+            <div class="modal-body" #rightModalDialog id="rightModalDialog">
                 <div class="custom" id="custom" #custom>
                     <!-- (ngSubmit)="isEditMode ? updateGroup() : onSubmit()" -->
                     <form [formGroup]="groupForm" class="formElements ">
@@ -75,7 +100,7 @@
                             <div class="form-group col-md-6">
                                 <label>Tax ID </label>
                                 <!-- [(ngModel)]="formData.taxId" -->
-                                <input  class="form-control"
+                                <input class="form-control"
                                     [ngClass]="{'border-danger':submitted && groupForm.get('taxId')?.invalid }"
                                     formControlName="taxId" id="taxId" placeholder="">
                                 <!-- <div *ngIf="groupForm.get('taxId')?.invalid && (groupForm.get('taxId')?.dirty || groupForm.get('taxId')?.touched)"> -->
@@ -177,6 +202,6 @@
 
 
 
-        </div><!-- modal-content -->
-    </div><!-- modal-dialog -->
+        </div>
+    </div>
 </div>

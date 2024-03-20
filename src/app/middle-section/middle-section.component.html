@@ -13,7 +13,7 @@
                             aria-selected="true">Group 1</a>
                     </li>
                 </ul>
-                <a class="btn btn-default" (click)="open()">Add Group</a>
+                <a class="btn btn-default" (click)="openAdd()">Add Group</a>
                 <!-- <a class="btn btn-default" data-toggle="modal" data-target="#rightModal">Add Group</a> -->
                 <!-- <a routerLink="/groups/add"  data-toggle="modal" data-target="#rightModal" class="btn btn-default">Add Group</a> -->
 
@@ -67,8 +67,10 @@
                                         <div class="zm-table-action">
                                             <!-- <a  [routerLink]="['/groups/edit', group.groupName]" data-toggle="modal" data-target="#rightModal" class="btn btn-default">Edit</a> -->
 
-                                            <a href="#" data-toggle="modal" data-target="#rightModal"
-                                                (click)="openEditMode(group)">Edit</a>
+                                            <!-- <a href="#" data-toggle="modal" data-target="#rightModal"
+                                                (click)="openEditMode(group)">Edit</a> -->
+                                                <a href="#"
+                                                (click)="openEdit(group)">Edit</a>
                                             <a href="#" class="margin-left" (click)="deleteGroup(group)">Delete</a>
                                             <!-- <a href="#">+ Add a Location</a> -->
                                         </div>
@@ -135,11 +137,15 @@
 
 
 <!-- Modal -->
-<ng-container *ngIf="isEditMode; else addGroupModal">
+<!-- <ng-container *ngIf="isEditMode; else addGroupModal">
     <app-modal [isEditMode]="isEditMode" [groupData]="groupData" (formSubmitted)="onFormSubmitted()"></app-modal>
 </ng-container>
 
 <ng-template #addGroupModal>
     <app-modal [isEditMode]="isEditMode" (formSubmitted)="onFormSubmitted()"></app-modal>
-</ng-template>
+</ng-template> -->
 <!-- modal -->
+
+
+<!-- 
+<app-addgroup (formSubmitted)="onFormSubmitted()"></app-addgroup>  -->
